@@ -1,0 +1,5 @@
+{
+  "infotop.welcome": "{lightpurple}[Info] {orange}★彡 {yellow}Dobrodosli na {orange}【 {lime}{HOSTNAME}{orange} 】彡★",
+  "infotop.addip": "{lightpurple}[Info] {yellow}Dodajte IP u favorites {orange}➤➤ {lime}127.0.0.1:27015",
+  "infotop.text": "{lightpurple}[Info] {yellow}Runda: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {orange}• {yellow}Mapa: {lime}{CURRENT_MAP} {orange}• {yellow}Igraci: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}"
+}
