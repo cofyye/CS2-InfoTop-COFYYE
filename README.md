@@ -2,7 +2,7 @@
 
 ## Overview
 **InfoTop** is a plugin designed to display important and key server information at the start of each round. The plugin is for **CS2** servers and will show details such as:
-- Server IP address
+- Server Hostname and IP address
 - Current round, max rounds and current map
 - Number of players currently in the game, max players
 
