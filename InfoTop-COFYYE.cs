@@ -2,6 +2,7 @@
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Translations;
 using CounterStrikeSharp.API.Modules.Cvars;
+using CounterStrikeSharp.API.Modules.Utils;
 
 namespace InfoTop_COFYYE
 {
@@ -37,33 +38,34 @@ namespace InfoTop_COFYYE
 
             foreach (var teamManager in teamManagers)
             {
-                if (teamManager.TeamNum == 2) //t
+                if ((CsTeam)teamManager.TeamNum == CsTeam.Terrorist)
                 {
                     ttScore += teamManager.Score;
                 }
-                if (teamManager.TeamNum == 3) //ct
+                if ((CsTeam)teamManager.TeamNum == CsTeam.CounterTerrorist)
                 {
                     ctScore += teamManager.Score;
                 }
             }
 
-            var localizerWelcome = Localizer["infotop.welcome"];
-            var localizerAddIP = Localizer["infotop.addip"];
-            var localizerText = Localizer["infotop.text"];
+            var players = Utilities.GetPlayers().Where(p => p.IsValid && !p.IsBot && !p.IsHLTV && p.Connected == PlayerConnectedState.PlayerConnected).ToList();
+            
+            foreach ( var player in players )
+            {
+                var localizerWelcome = Localizer.ForPlayer(player, "infotop.welcome")
+                                                .Replace("{HOSTNAME}", hostname);
+                var localizerAddIP = Localizer.ForPlayer(player, "infotop.addip");
+                var localizerText = Localizer.ForPlayer(player, "infotop.text")
+                                                .Replace("{CURRENT_ROUNDS}", (ttScore + ctScore).ToString())
+                                                .Replace("{MAX_ROUNDS}", maxRounds.ToString())
+                                                .Replace("{CURRENT_MAP}", Server.MapName)
+                                                .Replace("{CURRENT_PLAYERS}", Utilities.GetPlayers().Count.ToString())
+                                                .Replace("{MAX_PLAYERS}", Server.MaxPlayers.ToString());
 
-            var replacedWelcomeText = localizerWelcome.Value
-                                                 .Replace("{HOSTNAME}", hostname);
-
-            var replacedInfoText = localizerText.Value
-                                                 .Replace("{CURRENT_ROUNDS}", (ttScore + ctScore).ToString())
-                                                 .Replace("{MAX_ROUNDS}", maxRounds.ToString())
-                                                 .Replace("{CURRENT_MAP}", Server.MapName)
-                                                 .Replace("{CURRENT_PLAYERS}", Utilities.GetPlayers().Count.ToString())
-                                                 .Replace("{MAX_PLAYERS}", Server.MaxPlayers.ToString());
-
-            Server.PrintToChatAll(StringExtensions.ReplaceColorTags(replacedWelcomeText));
-            Server.PrintToChatAll(StringExtensions.ReplaceColorTags(localizerAddIP));
-            Server.PrintToChatAll(StringExtensions.ReplaceColorTags(replacedInfoText));
+                player.PrintToChat(StringExtensions.ReplaceColorTags(localizerWelcome));
+                player.PrintToChat(StringExtensions.ReplaceColorTags(localizerAddIP));
+                player.PrintToChat(StringExtensions.ReplaceColorTags(localizerText));
+            }
 
             return HookResult.Continue;
         }
