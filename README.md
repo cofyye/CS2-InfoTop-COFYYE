@@ -8,6 +8,11 @@
 
 Each round starts with the plugin outputting these essential details in a clear and user-friendly format. The plugin also supports multiple languages, allowing for a customized experience for different players based on their preferred language.
 
+## See it in action
+You can check out the plugin live on my server:  
+**IP**: 5.180.82.79:27015  
+Join and experience this plugin, along with all the other custom plugins I create for a unique gameplay experience.
+
 ### Features:
 - Displays server info at the start of every round.
 - Supports multiple languages for different players.
