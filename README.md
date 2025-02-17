@@ -10,7 +10,7 @@ Each round starts with the plugin outputting these essential details in a clear 
 
 ## See it in action
 You can check out the plugin live on my server:  
-**IP**: 5.180.82.79:27015  
+**IP**: 198.186.131.31:27015  
 Join and experience this plugin, along with all the other custom plugins I create for a unique gameplay experience.
 
 ### Features:
