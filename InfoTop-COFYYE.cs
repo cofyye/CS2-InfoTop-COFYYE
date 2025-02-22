@@ -2,32 +2,129 @@
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Translations;
 using CounterStrikeSharp.API.Modules.Cvars;
+using CounterStrikeSharp.API.Modules.Extensions;
 using CounterStrikeSharp.API.Modules.Utils;
+using InfoTop_COFYYE.Utils;
+using CounterStrikeSharp.API.Modules.Timers;
+using InfoTop_COFYYE.Variables;
 
 namespace InfoTop_COFYYE
 {
-    public class InfoTopCOFYYE : BasePlugin
+    public class InfoTopCOFYYE : BasePlugin, IPluginConfig<Config.Config>
     {
         public override string ModuleName => "InfoTop";
-        public override string ModuleVersion => "1.0";
+        public override string ModuleVersion => "1.1";
         public override string ModuleAuthor => "cofyye";
         public override string ModuleDescription => "https://github.com/cofyye";
 
+        public static InfoTopCOFYYE Instance { get; set; } = new();
+        public Config.Config Config { get; set; } = new();
+
+        public void OnConfigParsed(Config.Config config)
+        {
+            Config = config ?? throw new ArgumentNullException(nameof(config));
+
+            Instance = this;
+        }
+
         public override void Load(bool hotReload)
         {
+            base.Load(hotReload);
+            
+            if(hotReload)
+            {
+                Config?.Reload();
+            }
+
+            GlobalVariables.WelcomeMessageProvider = new();
+            GlobalVariables.AddIpProvider = new();
+            GlobalVariables.InfoTopTextProvider = new();
+            GlobalVariables.HudMessageProvider = new();
+
+            AddTimer(1.0f, () =>
+            {
+                if (GlobalVariables.DurationHudTimer < Config?.DurationPerHudAd)
+                {
+                    // We show HUD advertisement until DurationHudTimer is limit (120)
+                    HudUtils.ShowHudAd();
+                    GlobalVariables.DurationHudTimer++;
+                }
+                else if (GlobalVariables.CooldownHudTimer < Config?.CoolDownPerHudAd)
+                {
+                    // When DurationHudTimer expires, we start CooldownHudTimer(counts to 60)
+                    HudUtils.ResetHud();
+                    GlobalVariables.CooldownHudTimer++;
+                }
+                else
+                {
+                    // When the CooldownHudTimer also expires, we reset both and start over
+                    GlobalVariables.DurationHudTimer = 0;
+                    GlobalVariables.CooldownHudTimer = 0;
+                }
+            }, TimerFlags.REPEAT);
+            
             // Events
             RegisterEventHandler<EventRoundStart>(RoundStartHandler);
+            RegisterEventHandler<EventPlayerConnectFull>(PlayerConnectFullHandler);
+            RegisterEventHandler<EventPlayerDisconnect>(PlayerDisconnectHandler);
+
+            // Listeners
+            RegisterListener<Listeners.OnMapStart>(OnMapStart);
         }
 
         public override void Unload(bool hotReload)
         {
+            GlobalVariables.WelcomeMessageProvider = null;
+            GlobalVariables.AddIpProvider = null;
+            GlobalVariables.InfoTopTextProvider = null;
+            GlobalVariables.HudMessageProvider = null;
+
             // Unregister Events
             DeregisterEventHandler<EventRoundStart>(RoundStartHandler);
+            DeregisterEventHandler<EventPlayerConnectFull>(PlayerConnectFullHandler);
+            DeregisterEventHandler<EventPlayerDisconnect>(PlayerDisconnectHandler);
+
+            // Unregister Listeners
+            RemoveListener<Listeners.OnMapStart>(OnMapStart);
+        }
+
+        public HookResult PlayerConnectFullHandler(EventPlayerConnectFull @event, GameEventInfo info)
+        {
+            if (@event == null) return HookResult.Continue;
+
+            var steamId = @event?.Userid?.SteamID.ToString();
+
+            if (string.IsNullOrEmpty(steamId)) return HookResult.Continue;
+
+            GlobalVariables.HudText.Add(steamId, null);
+
+            return HookResult.Continue;
+        }
+
+        public HookResult PlayerDisconnectHandler(EventPlayerDisconnect @event, GameEventInfo info)
+        {
+            if (@event == null) return HookResult.Continue;
+
+            var steamId = @event?.Userid?.SteamID.ToString();
+
+            if (string.IsNullOrEmpty(steamId)) return HookResult.Continue;
+
+            HudUtils.KillHud(@event?.Userid!);
+            GlobalVariables.HudText.Remove(steamId);
+
+            return HookResult.Continue;
         }
 
         public HookResult RoundStartHandler(EventRoundStart @event, GameEventInfo info)
         {
             if (@event == null) return HookResult.Continue;
+
+            HudUtils.ResetHud();
+
+            if (ServerUtils.GetGameRules().TotalRoundsPlayed % Config?.ShowInfoEveryXRound != 0)
+            {
+                return HookResult.Continue;
+            }
 
             var hostname = ConVar.Find("hostname")?.StringValue;
             var maxRounds = ConVar.Find("mp_maxrounds")?.GetPrimitiveValue<int>();
@@ -48,26 +145,44 @@ namespace InfoTop_COFYYE
                 }
             }
 
-            var players = Utilities.GetPlayers().Where(p => p.IsValid && !p.IsBot && !p.IsHLTV && p.Connected == PlayerConnectedState.PlayerConnected).ToList();
+            var players = Utilities.GetPlayers().Where(p => PlayerUtils.IsValidPlayer(p)).ToList();
             
             foreach ( var player in players )
             {
-                var localizerWelcome = Localizer.ForPlayer(player, "infotop.welcome")
-                                                .Replace("{HOSTNAME}", hostname);
-                var localizerAddIP = Localizer.ForPlayer(player, "infotop.addip");
-                var localizerText = Localizer.ForPlayer(player, "infotop.text")
-                                                .Replace("{CURRENT_ROUNDS}", (ttScore + ctScore).ToString())
-                                                .Replace("{MAX_ROUNDS}", maxRounds.ToString())
-                                                .Replace("{CURRENT_MAP}", Server.MapName)
-                                                .Replace("{CURRENT_PLAYERS}", Utilities.GetPlayers().Count.ToString())
-                                                .Replace("{MAX_PLAYERS}", Server.MaxPlayers.ToString());
+                if(Config?.EnableWelcomeMsg == true)
+                {
+                    var localizerWelcome = GlobalVariables.WelcomeMessageProvider?.GetWelcomeMessage(player.GetLanguage().TwoLetterISOLanguageName ?? "en")
+                                                                 .Replace("{HOSTNAME}", hostname) ?? "Message not available";
 
-                player.PrintToChat(StringExtensions.ReplaceColorTags(localizerWelcome));
-                player.PrintToChat(StringExtensions.ReplaceColorTags(localizerAddIP));
-                player.PrintToChat(StringExtensions.ReplaceColorTags(localizerText));
+                    player.PrintToChat(StringExtensions.ReplaceColorTags(localizerWelcome));
+                }
+
+                if (Config?.EnableAddIpMsg == true)
+                {
+                    var localizerAddIP = GlobalVariables.AddIpProvider?.GetAddIpMessage(player.GetLanguage().TwoLetterISOLanguageName ?? "en") ?? "Message not available";
+
+                    player.PrintToChat(StringExtensions.ReplaceColorTags(localizerAddIP));
+                }
+
+                if (Config?.EnableInfoTopText == true)
+                {
+                    var localizerText = GlobalVariables.InfoTopTextProvider?.GetInfoTopTextMessage(player.GetLanguage().TwoLetterISOLanguageName ?? "en")
+                                                           .Replace("{CURRENT_ROUNDS}", (ttScore + ctScore).ToString())
+                                                           .Replace("{MAX_ROUNDS}", maxRounds.ToString())
+                                                           .Replace("{CURRENT_MAP}", Server.MapName)
+                                                           .Replace("{CURRENT_PLAYERS}", Utilities.GetPlayers().Count.ToString())
+                                                           .Replace("{MAX_PLAYERS}", Server.MaxPlayers.ToString()) ?? "Message not available";
+
+                    player.PrintToChat(StringExtensions.ReplaceColorTags(localizerText));
+                }
             }
 
             return HookResult.Continue;
+        }
+
+        public void OnMapStart(string mapName)
+        {
+            Config?.Reload();
         }
     }
 }

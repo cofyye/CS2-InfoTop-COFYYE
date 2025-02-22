@@ -4,4 +4,6 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 using System.Diagnostics.CodeAnalysis;
-[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:InfoTop_COFYYE.InfoTopCOFYYE.RestartHandler(CounterStrikeSharp.API.Core.EventRoundStart,CounterStrikeSharp.API.Core.GameEventInfo)~CounterStrikeSharp.API.Core.HookResult")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:InfoTop_COFYYE.InfoTopCOFYYE.OnMapStart(System.String)")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:InfoTop_COFYYE.InfoTopCOFYYE.PlayerDisconnectHandler(CounterStrikeSharp.API.Core.EventPlayerDisconnect,CounterStrikeSharp.API.Core.GameEventInfo)~CounterStrikeSharp.API.Core.HookResult")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:InfoTop_COFYYE.InfoTopCOFYYE.PlayerConnectFullHandler(CounterStrikeSharp.API.Core.EventPlayerConnectFull,CounterStrikeSharp.API.Core.GameEventInfo)~CounterStrikeSharp.API.Core.HookResult")]
