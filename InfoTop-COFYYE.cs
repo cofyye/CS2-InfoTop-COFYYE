@@ -41,27 +41,30 @@ namespace InfoTop_COFYYE
             GlobalVariables.InfoTopTextProvider = new();
             GlobalVariables.HudMessageProvider = new();
 
-            AddTimer(1.0f, () =>
+            if(Config?.EnableHudAds == true)
             {
-                if (GlobalVariables.DurationHudTimer < Config?.DurationPerHudAd)
+                AddTimer(1.0f, () =>
                 {
-                    // We show HUD advertisement until DurationHudTimer is limit (120)
-                    HudUtils.ShowHudAd();
-                    GlobalVariables.DurationHudTimer++;
-                }
-                else if (GlobalVariables.CooldownHudTimer < Config?.CoolDownPerHudAd)
-                {
-                    // When DurationHudTimer expires, we start CooldownHudTimer(counts to 60)
-                    HudUtils.ResetHud();
-                    GlobalVariables.CooldownHudTimer++;
-                }
-                else
-                {
-                    // When the CooldownHudTimer also expires, we reset both and start over
-                    GlobalVariables.DurationHudTimer = 0;
-                    GlobalVariables.CooldownHudTimer = 0;
-                }
-            }, TimerFlags.REPEAT);
+                    if (GlobalVariables.DurationHudTimer < Config?.DurationPerHudAd)
+                    {
+                        // We show HUD advertisement until DurationHudTimer is limit (120)
+                        HudUtils.ShowHudAd();
+                        GlobalVariables.DurationHudTimer++;
+                    }
+                    else if (GlobalVariables.CooldownHudTimer < Config?.CoolDownPerHudAd)
+                    {
+                        // When DurationHudTimer expires, we start CooldownHudTimer(counts to 60)
+                        HudUtils.ResetHud();
+                        GlobalVariables.CooldownHudTimer++;
+                    }
+                    else
+                    {
+                        // When the CooldownHudTimer also expires, we reset both and start over
+                        GlobalVariables.DurationHudTimer = 0;
+                        GlobalVariables.CooldownHudTimer = 0;
+                    }
+                }, TimerFlags.REPEAT);
+            }
             
             // Events
             RegisterEventHandler<EventRoundStart>(RoundStartHandler);

@@ -26,6 +26,24 @@ namespace InfoTop_COFYYE.Config
         [JsonPropertyName("cooldown_per_hud_ad")]
         public int CoolDownPerHudAd { get; init; } = 60;
 
+        [JsonPropertyName("hud_rgb_color")]
+        public string HudRGBColor { get; init; } = "255,165,0";
+
+        [JsonPropertyName("hud_font_size")]
+        public int HudFontSize { get; init; } = 35;
+
+        [JsonPropertyName("hud_font_family")]
+        public string HudFontFamily { get; init; } = "Arial Bold";
+
+        [JsonPropertyName("hud_position_x")]
+        public float HudPositionX { get; init; } = -2.4f;
+
+        [JsonPropertyName("hud_position_y")]
+        public float HudPositionY { get; init; } = 3.8f;
+
+        [JsonPropertyName("enable_hud_background")]
+        public bool EnableHudBackground { get; init; } = true;
+
         [JsonPropertyName("welcome_messages")]
         public Dictionary<string, Dictionary<string, string>> WelcomeMessages { get; init; } = new()
         {
@@ -61,13 +79,13 @@ namespace InfoTop_COFYYE.Config
         {
             ["hud_message_1"] = new()
             {
-                ["sr"] = "Hud por 1",
-                ["en"] = "Hud msg 1"
+                ["sr"] = "Dodajte IP u favorites ➤➤ 127.0.0.1:27015",
+                ["en"] = "Add IP to favorites ➤➤ 127.0.0.1:27015"
             },
             ["hud_message_2"] = new()
             {
-                ["sr"] = "Hud por 2",
-                ["en"] = "Hud msg 2"
+                ["sr"] = "Pridruzite se nasem Discord serveru, kucaj !discord",
+                ["en"] = "Join our Discord server, say !discord"
             },
         };
     }

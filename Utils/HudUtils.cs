@@ -28,13 +28,20 @@ namespace InfoTop_COFYYE.Utils
                 PlayerUtils.InitializePlayerWorldText(player);
 
                 string lang = player.GetLanguage().TwoLetterISOLanguageName ?? "en";
-                string hudMessage = _currentHudMessage.TryGetValue(lang, out var msg) ? msg : "Default HUD Message";
+                string hudMessage = _currentHudMessage.TryGetValue(lang, out var msg) ? msg : _currentHudMessage["en"];
 
                 var hudText = GlobalVariables.HudText[player.SteamID.ToString()];
 
                 Instance?.AddTimer(0.1f, () =>
                 {
-                    hudText = WorldTextManager.Create(player, hudMessage, 35, Color.Blue, "Arial Bold", -2, 0, true, 0.1f, 0.1f);
+                    var fontRGB = Instance?.Config?.HudRGBColor?.Split(",");
+
+                    hudText = WorldTextManager.Create(
+                        player, hudMessage, Instance?.Config?.HudFontSize ?? 35,
+                        Color.FromArgb(int.Parse(fontRGB?[0] ?? "255"), int.Parse(fontRGB?[1] ?? "165"), int.Parse(fontRGB?[2] ?? "0")), 
+                        Instance?.Config.HudFontFamily ?? "Arial Bold",
+                        Instance?.Config?.HudPositionX ?? -2.4f, Instance?.Config?.HudPositionY ?? 3.8f,
+                        Instance?.Config?.EnableHudBackground == true, 0.1f, 0.1f);
 
                     if (hudText != null && hudText.IsValid)
                     {
