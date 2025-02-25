@@ -1,5 +1,14 @@
 # 🎯 [CS2] InfoTop (1.1)  
 
+## 📊 Plugin Statistics  
+
+<p align="center">
+  <img src="https://img.shields.io/github/downloads/cofyye/CS2-InfoTop-COFYYE/total" alt="Total Downloads">
+  <img src="https://img.shields.io/github/stars/cofyye/CS2-InfoTop-COFYYE" alt="GitHub Stars">
+  <img src="https://img.shields.io/github/last-commit/cofyye/CS2-InfoTop-COFYYE" alt="Last Update">
+  <img src="https://img.shields.io/github/issues/cofyye/CS2-InfoTop-COFYYE" alt="Open Issues">
+</p>
+
 ## 📌 Overview  
 **InfoTop** is a plugin designed to display essential server information at the start of each round in **CS2**. This ensures players always have key details about the game in a clear and user-friendly format.  
 
