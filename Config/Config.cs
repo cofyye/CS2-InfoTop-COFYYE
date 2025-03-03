@@ -30,19 +30,25 @@ namespace InfoTop_COFYYE.Config
         public string HudRGBColor { get; init; } = "255,165,0";
 
         [JsonPropertyName("hud_font_size")]
-        public int HudFontSize { get; init; } = 35;
+        public int HudFontSize { get; init; } = 20;
+
+        [JsonPropertyName("hud_font_units")]
+        public float HudFontUnits { get; init; } = 0.25f;
 
         [JsonPropertyName("hud_font_family")]
         public string HudFontFamily { get; init; } = "Arial Bold";
 
         [JsonPropertyName("hud_position_x")]
-        public float HudPositionX { get; init; } = -2.4f;
+        public float HudPositionX { get; init; } = 0.0f;
 
         [JsonPropertyName("hud_position_y")]
-        public float HudPositionY { get; init; } = 3.8f;
+        public float HudPositionY { get; init; } = 40.0f;
 
-        [JsonPropertyName("enable_hud_background")]
-        public bool EnableHudBackground { get; init; } = true;
+        [JsonPropertyName("hud_bg_border_height")]
+        public float HudBgBorderHeight { get; init; } = 0.5f;
+
+        [JsonPropertyName("hud_bg_border_width")]
+        public float HudBgBorderWidth { get; init; } = 0.5f;
 
         [JsonPropertyName("welcome_messages")]
         public Dictionary<string, Dictionary<string, string>> WelcomeMessages { get; init; } = new()

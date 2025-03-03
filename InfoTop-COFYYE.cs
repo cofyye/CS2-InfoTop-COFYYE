@@ -7,13 +7,16 @@ using CounterStrikeSharp.API.Modules.Utils;
 using InfoTop_COFYYE.Utils;
 using CounterStrikeSharp.API.Modules.Timers;
 using InfoTop_COFYYE.Variables;
+using CS2_GameHUDAPI;
+using CounterStrikeSharp.API.Core.Capabilities;
+using Microsoft.Extensions.Logging;
 
 namespace InfoTop_COFYYE
 {
     public class InfoTopCOFYYE : BasePlugin, IPluginConfig<Config.Config>
     {
         public override string ModuleName => "InfoTop";
-        public override string ModuleVersion => "1.1";
+        public override string ModuleVersion => "1.2";
         public override string ModuleAuthor => "cofyye";
         public override string ModuleDescription => "https://github.com/cofyye";
 
@@ -75,6 +78,20 @@ namespace InfoTop_COFYYE
             RegisterListener<Listeners.OnMapStart>(OnMapStart);
         }
 
+        public override void OnAllPluginsLoaded(bool hotReload)
+        {
+        try
+            {
+                PluginCapability<IGameHUDAPI> CapabilityCP = new("gamehud:api");
+                GlobalVariables.GameHudApi = IGameHUDAPI.Capability.Get();
+            }
+            catch (Exception)
+            {
+                GlobalVariables.GameHudApi = null;
+                Logger.LogError($"GameHUD API Loading Failed!");
+            }
+        }
+
         public override void Unload(bool hotReload)
         {
             GlobalVariables.WelcomeMessageProvider = null;
@@ -99,7 +116,7 @@ namespace InfoTop_COFYYE
 
             if (string.IsNullOrEmpty(steamId)) return HookResult.Continue;
 
-            GlobalVariables.HudText.Add(steamId, null);
+            GlobalVariables.IsActiveHud.Add(steamId, false);
 
             return HookResult.Continue;
         }
@@ -113,7 +130,7 @@ namespace InfoTop_COFYYE
             if (string.IsNullOrEmpty(steamId)) return HookResult.Continue;
 
             HudUtils.KillHud(@event?.Userid!);
-            GlobalVariables.HudText.Remove(steamId);
+            GlobalVariables.IsActiveHud.Remove(steamId);
 
             return HookResult.Continue;
         }

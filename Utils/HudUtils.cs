@@ -22,34 +22,27 @@ namespace InfoTop_COFYYE.Utils
 
             foreach (var player in players)
             {
-                if (!GlobalVariables.HudText.ContainsKey(player.SteamID.ToString())) continue;
-                if (GlobalVariables.HudText[player.SteamID.ToString()] != null) continue;
+                if (!GlobalVariables.IsActiveHud.ContainsKey(player.SteamID.ToString())) continue;
+                if (GlobalVariables.IsActiveHud[player.SteamID.ToString()] is true) continue;
 
-                PlayerUtils.InitializePlayerWorldText(player);
 
                 string lang = player.GetLanguage().TwoLetterISOLanguageName ?? "en";
                 string hudMessage = _currentHudMessage.TryGetValue(lang, out var msg) ? msg : _currentHudMessage["en"];
+                var fontRGB = Instance?.Config?.HudRGBColor?.Split(",");
 
-                var hudText = GlobalVariables.HudText[player.SteamID.ToString()];
+                GlobalVariables.GameHudApi?.Native_GameHUD_SetParams(player, 0, 
+                                                        new CounterStrikeSharp.API.Modules.Utils.Vector(Instance?.Config?.HudPositionX ?? 0.0f, Instance?.Config?.HudPositionY ?? 40.0f, 80),
+                                                        Color.FromArgb(int.Parse(fontRGB?[0] ?? "255"), int.Parse(fontRGB?[1] ?? "165"), int.Parse(fontRGB?[2] ?? "0")),
+                                                        Instance?.Config?.HudFontSize ?? 16, Instance?.Config.HudFontFamily ?? "Arial Bold", 
+                                                        Instance?.Config?.HudFontUnits ?? 0.25f,
+                                                        PointWorldTextJustifyHorizontal_t.POINT_WORLD_TEXT_JUSTIFY_HORIZONTAL_CENTER,
+                                                        PointWorldTextJustifyVertical_t.POINT_WORLD_TEXT_JUSTIFY_VERTICAL_TOP,
+                                                        PointWorldTextReorientMode_t.POINT_WORLD_TEXT_REORIENT_NONE,
+                                                        bgborderheight: Instance?.Config?.HudBgBorderHeight ?? 0.5f, 
+                                                        bgborderwidth: Instance?.Config?.HudBgBorderWidth ?? 0.5f);
+                GlobalVariables.GameHudApi?.Native_GameHUD_ShowPermanent(player, 0, hudMessage);
 
-                Instance?.AddTimer(0.1f, () =>
-                {
-                    var fontRGB = Instance?.Config?.HudRGBColor?.Split(",");
-
-                    hudText = WorldTextManager.Create(
-                        player, hudMessage, Instance?.Config?.HudFontSize ?? 35,
-                        Color.FromArgb(int.Parse(fontRGB?[0] ?? "255"), int.Parse(fontRGB?[1] ?? "165"), int.Parse(fontRGB?[2] ?? "0")), 
-                        Instance?.Config.HudFontFamily ?? "Arial Bold",
-                        Instance?.Config?.HudPositionX ?? -2.4f, Instance?.Config?.HudPositionY ?? 3.8f,
-                        Instance?.Config?.EnableHudBackground == true, 0.1f, 0.1f);
-
-                    if (hudText != null && hudText.IsValid)
-                    {
-                        hudText.AcceptInput("SetMessage", hudText, hudText, hudMessage);
-                    }
-
-                    GlobalVariables.HudText[player.SteamID.ToString()] = hudText;
-                });
+                GlobalVariables.IsActiveHud[player.SteamID.ToString()] = true;
             }
         }
 
@@ -59,30 +52,21 @@ namespace InfoTop_COFYYE.Utils
 
             foreach (var player in players)
             {
-                if (!GlobalVariables.HudText.ContainsKey(player.SteamID.ToString())) continue;
-                if (GlobalVariables.HudText[player.SteamID.ToString()] == null) continue;
+                if (!GlobalVariables.IsActiveHud.ContainsKey(player.SteamID.ToString())) continue;
+                if (GlobalVariables.IsActiveHud[player.SteamID.ToString()] is false) continue;
 
                 KillHud(player);
-                GlobalVariables.HudText[player.SteamID.ToString()] = null;
             }
         }
 
         public static void KillHud(CCSPlayerController player)
         {
             if(player == null) return;
-            if (!GlobalVariables.HudText.ContainsKey(player.SteamID.ToString())) return;
-            if (GlobalVariables.HudText[player.SteamID.ToString()] == null) return;
+            if (!GlobalVariables.IsActiveHud.ContainsKey(player.SteamID.ToString())) return;
+            if (GlobalVariables.IsActiveHud[player.SteamID.ToString()] is false) return;
 
-            var hudText = GlobalVariables.HudText[player.SteamID.ToString()];
-
-            if (hudText != null && hudText.IsValid)
-            {
-                hudText.Enabled = false;
-                hudText.AcceptInput("Kill", hudText);
-                WorldTextManager.WorldTextOwners.Clear();
-
-                GlobalVariables.HudText[player.SteamID.ToString()] = null;
-            }
+            GlobalVariables.GameHudApi?.Native_GameHUD_Remove(player, 0);
+            GlobalVariables.IsActiveHud[player.SteamID.ToString()] = false;
         }
     }
 }
