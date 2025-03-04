@@ -25,9 +25,10 @@ namespace InfoTop_COFYYE.Utils
                 if (!GlobalVariables.IsActiveHud.ContainsKey(player.SteamID.ToString())) continue;
                 if (GlobalVariables.IsActiveHud[player.SteamID.ToString()] is true) continue;
 
-
                 string lang = player.GetLanguage().TwoLetterISOLanguageName ?? "en";
-                string hudMessage = _currentHudMessage.TryGetValue(lang, out var msg) ? msg : _currentHudMessage["en"];
+                string hudMessage = _currentHudMessage.TryGetValue(lang, out var msg)
+                    ? msg
+                    : (_currentHudMessage.TryGetValue("en", out var defaultMsg) ? defaultMsg : "Unknown Language");
                 var fontRGB = Instance?.Config?.HudRGBColor?.Split(",");
 
                 GlobalVariables.GameHudApi?.Native_GameHUD_SetParams(player, 0, 
