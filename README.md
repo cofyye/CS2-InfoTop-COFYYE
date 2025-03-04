@@ -1,4 +1,4 @@
-# 🎯 [CS2] InfoTop (1.1)  
+# 🎯 [CS2] InfoTop
 
 ## 📊 Plugin Statistics  
 
@@ -53,13 +53,16 @@ To run this plugin, ensure the following dependencies are installed:
 2️⃣ **CounterStrikeSharp**  
    🔗 [Download Here](https://github.com/roflmuffin/CounterStrikeSharp/releases)  
 
+3️⃣ **CS2-GameHUD**  
+   🔗 [Download Here](https://github.com/darkerz7/CS2-GameHUD/releases)  
+   
 ---
 
 ## ⚙️ Installation & Configuration  
 
 ### 🔧 Installation Steps  
 1. **Download** the latest release:  
-   📥 [InfoTop v1.0](https://github.com/cofyye/CS2-InfoTop-COFYYE/releases/download/1.1/InfoTop-COFYYE-v1.1.zip)  
+   📥 [InfoTop v1.2](https://github.com/cofyye/CS2-InfoTop-COFYYE/releases/download/1.2/InfoTop-COFYYE-v1.2.zip)  
 2. **Extract & Upload** the contents into:  
    > `game/csgo/addons/counterstrikesharp/plugins`  
 3. **Restart the server** or **change the map** to activate the plugin.  
@@ -124,12 +127,20 @@ All configurations, including language settings, can be adjusted in the followin
    - **Values**: Float (e.g., `3.8f`, `5.0f`, `-1.0f`)  
    - **Description**: Defines the vertical position of HUD messages.  
 
-13. **`enable_hud_background`**  
-   - **Values**: `true`, `false`  
-   - **Description**: Enables or disables the HUD background for better readability.  
+13. **`hud_bg_border_height`**  
+   - **Values**: Float (e.g., 0.5f)  
+   - **Description**: Defines the HUD background border height.  
+
+14. **`hud_bg_border_width`**  
+   - **Values**: Float (e.g., 0.5f)  
+   - **Description**: Defines the HUD background border width.  
+
+15. **`hud_font_units`**  
+   - **Values**: Float (e.g., 0.25f)  
+   - **Description**: Defines the font unit scale for HUD messages.  
 
 ### 🔹 Welcome & Custom Messages  
-14. **`welcome_messages`**  
+16. **`welcome_messages`**  
    - **Values**: Multi-language message settings  
    - **Example**:  
      ```json
@@ -142,7 +153,7 @@ All configurations, including language settings, can be adjusted in the followin
      ```
    - **Description**: Sets the welcome messages in different languages.  
 
-15. **`addip_messages`**  
+17. **`addip_messages`**  
    - **Values**: Multi-language message settings  
    - **Example**:  
      ```json
@@ -155,7 +166,7 @@ All configurations, including language settings, can be adjusted in the followin
      ```
    - **Description**: Sets the "Add IP to favorites" messages in different languages.  
 
-16. **`hud_messages`**  
+18. **`hud_messages`**  
    - **Values**: Multi-language HUD message settings  
    - **Example**:  
      ```json
@@ -170,10 +181,10 @@ All configurations, including language settings, can be adjusted in the followin
 
 ---
 
-## 👥 Credits  
+## 🎉 Credits for Version 1.1  
 
-A huge **thank you** to [T3Marius](https://github.com/T3Marius) for his incredible help in implementing HUD messages via **WorldTextManager**! 🎉  
-Without his expertise, this feature wouldn’t be as polished as it is! 🚀 
+A huge **thank you** to [T3Marius](https://github.com/T3Marius) for his incredible help in improving HUD messages in **version 1.1**! 🎉  
+His expertise with **WorldTextManager** made this update smoother and more polished than ever! 🚀  
 
 ## 💰 Support & Donation  
 
