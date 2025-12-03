@@ -183,56 +183,64 @@ All configurations, including language settings, can be adjusted in the followin
 
 - **Values**: Multi-language message settings
 - **Example**:
-  ```json
-  "welcome_messages": {
-    "welcome_message_1": {
+
+```json
+"welcome_messages": {
+   "welcome_message_1": {
       "sr": "{orange}★彡 {yellow}Dobrodosli na{orange}【 {lime}{HOSTNAME}{orange} 】彡★",
       "en": "{orange}★彡 {yellow}Welcome to{orange}【 {lime}{HOSTNAME}{orange} 】彡★"
-    }
-  }
-  ```
+   }
+}
+```
+
 - **Description**: Sets the welcome messages in different languages. Supports `{NEXTLINE}` for multi-line messages.
 
 18. **`addip_messages`**
 
 - **Values**: Multi-language message settings
 - **Example**:
-  ```json
-  "addip_messages": {
-    "addip_message_1": {
+
+```json
+"addip_messages": {
+   "addip_message_1": {
       "sr": "{yellow}Dodajte IP u favorites {orange}➤➤ {lime}{IP}",
       "en": "{yellow}Add IP to favorites {orange}➤➤ {lime}{IP}"
-    }
-  }
-  ```
+   }
+}
+```
+
 - **Description**: Sets the "Add IP to favorites" messages in different languages. Supports `{NEXTLINE}` for multi-line messages.
 
 19. **`infotop_text_messages`**
 
 - **Values**: Multi-language message settings
 - **Example**:
-  ```json
-  "infotop_text_messages": {
-    "infotop_text_message_1": {
+
+```json
+"infotop_text_messages": {
+   "infotop_text_message_1": {
       "sr": "{yellow}Runda: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {NEXTLINE} {yellow}Mapa: {lime}{CURRENT_MAP} {NEXTLINE} {yellow}Igraci: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}",
       "en": "{yellow}Round: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {NEXTLINE} {yellow}Map: {lime}{CURRENT_MAP} {NEXTLINE} {yellow}Players: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}"
-    }
-  }
-  ```
+   }
+}
+```
+
 - **Description**: Configures the info text messages. Supports `{NEXTLINE}` for multi-line messages.
 
 20. **`hud_messages`**
 
 - **Values**: Multi-language HUD message settings
 - **Example**:
-  ```json
-  "hud_messages": {
-    "hud_message_1": {
+
+```json
+"hud_messages": {
+   "hud_message_1": {
       "sr": "Dodajte IP u favorites ➤➤ {IP}",
       "en": "Add IP to favorites ➤➤ {IP}"
-    }
-  }
-  ```
+   }
+}
+```
+
 - **Description**: Configures HUD messages in multiple languages. Does **NOT** support `{NEXTLINE}`.
 
 ---
