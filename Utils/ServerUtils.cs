@@ -1,5 +1,5 @@
-﻿using CounterStrikeSharp.API.Core;
-using CounterStrikeSharp.API;
+﻿using CounterStrikeSharp.API;
+using CounterStrikeSharp.API.Core;
 
 namespace InfoTop_COFYYE.Utils
 {
@@ -7,7 +7,9 @@ namespace InfoTop_COFYYE.Utils
     {
         public static CCSGameRules GetGameRules()
         {
-            var gameRulesEntities = Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules");
+            var gameRulesEntities = Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>(
+                "cs_gamerules"
+            );
             var gameRules = gameRulesEntities.First().GameRules;
 
             if (gameRules == null)

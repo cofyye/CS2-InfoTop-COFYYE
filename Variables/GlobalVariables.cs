@@ -14,6 +14,10 @@ namespace InfoTop_COFYYE.Variables
         public static int DurationHudTimer { get; set; } = 0;
         public static int CooldownHudTimer { get; set; } = 0;
 
-        public static IGameHUDAPI? GameHudApi { get { return _gameHudApi; } set { _gameHudApi = value; } }
+        public static IGameHUDAPI? GameHudApi
+        {
+            get { return _gameHudApi; }
+            set { _gameHudApi = value; }
+        }
     }
 }

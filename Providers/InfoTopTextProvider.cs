@@ -8,7 +8,9 @@
 
         public InfoTopTextProvider()
         {
-            _messagesQueue = new Queue<KeyValuePair<string, Dictionary<string, string>>>(Instance?.Config?.InfoTopTextMessages ?? []);
+            _messagesQueue = new Queue<KeyValuePair<string, Dictionary<string, string>>>(
+                Instance?.Config?.InfoTopTextMessages ?? []
+            );
         }
 
         public string GetInfoTopTextMessage(string language)

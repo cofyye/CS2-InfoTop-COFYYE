@@ -1,5 +1,5 @@
-﻿using CounterStrikeSharp.API.Core;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using CounterStrikeSharp.API.Core;
 
 namespace InfoTop_COFYYE.Config
 {
@@ -51,48 +51,58 @@ namespace InfoTop_COFYYE.Config
         public float HudBgBorderWidth { get; init; } = 0.5f;
 
         [JsonPropertyName("welcome_messages")]
-        public Dictionary<string, Dictionary<string, string>> WelcomeMessages { get; init; } = new()
-        {
-            ["welcome_message_1"] = new()
+        public Dictionary<string, Dictionary<string, string>> WelcomeMessages { get; init; } =
+            new()
             {
-                ["sr"] = "{lightpurple}[Info] {orange}★彡 {yellow}Dobrodosli na{orange}【 {lime}{HOSTNAME}{orange} 】彡★",
-                ["en"] = "{lightpurple}[Info] {orange}★彡 {yellow}Welcome to{orange}【 {lime}{HOSTNAME}{orange} 】彡★"
-            }
-        };
+                ["welcome_message_1"] = new()
+                {
+                    ["sr"] =
+                        "{lightpurple}[Info] {orange}★彡 {yellow}Dobrodosli na{orange}【 {lime}{HOSTNAME}{orange} 】彡★",
+                    ["en"] =
+                        "{lightpurple}[Info] {orange}★彡 {yellow}Welcome to{orange}【 {lime}{HOSTNAME}{orange} 】彡★",
+                },
+            };
 
         [JsonPropertyName("addip_messages")]
-        public Dictionary<string, Dictionary<string, string>> AddIpMessages { get; init; } = new()
-        {
-            ["addip_message_1"] = new()
+        public Dictionary<string, Dictionary<string, string>> AddIpMessages { get; init; } =
+            new()
             {
-                ["sr"] = "{lightpurple}[Info] {yellow}Dodajte IP u favorites {orange}➤➤ {lime}127.0.0.1:27015",
-                ["en"] = "{lightpurple}[Info] {yellow}Add IP to favorites {orange}➤➤ {lime}127.0.0.1:27015"
-            }
-        };
+                ["addip_message_1"] = new()
+                {
+                    ["sr"] =
+                        "{lightpurple}[Info] {yellow}Dodajte IP u favorites {orange}➤➤ {lime}127.0.0.1:27015",
+                    ["en"] =
+                        "{lightpurple}[Info] {yellow}Add IP to favorites {orange}➤➤ {lime}127.0.0.1:27015",
+                },
+            };
 
         [JsonPropertyName("infotop_text_messages")]
-        public Dictionary<string, Dictionary<string, string>> InfoTopTextMessages { get; init; } = new()
-        {
-            ["infotop_text_message_1"] = new()
+        public Dictionary<string, Dictionary<string, string>> InfoTopTextMessages { get; init; } =
+            new()
             {
-                ["sr"] = "{lightpurple}[Info] {yellow}Runda: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {orange}• {yellow}Mapa: {lime}{CURRENT_MAP} {orange}• {yellow}Igraci: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}",
-                ["en"] = "{lightpurple}[Info] {yellow}Round: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {orange}• {yellow}Map: {lime}{CURRENT_MAP} {orange}• {yellow}Players: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}"
-            }
-        };
+                ["infotop_text_message_1"] = new()
+                {
+                    ["sr"] =
+                        "{lightpurple}[Info] {yellow}Runda: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {orange}• {yellow}Mapa: {lime}{CURRENT_MAP} {orange}• {yellow}Igraci: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}",
+                    ["en"] =
+                        "{lightpurple}[Info] {yellow}Round: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {orange}• {yellow}Map: {lime}{CURRENT_MAP} {orange}• {yellow}Players: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}",
+                },
+            };
 
         [JsonPropertyName("hud_messages")]
-        public Dictionary<string, Dictionary<string, string>> HudMessages { get; init; } = new()
-        {
-            ["hud_message_1"] = new()
+        public Dictionary<string, Dictionary<string, string>> HudMessages { get; init; } =
+            new()
             {
-                ["sr"] = "Dodajte IP u favorites ➤➤ 127.0.0.1:27015",
-                ["en"] = "Add IP to favorites ➤➤ 127.0.0.1:27015"
-            },
-            ["hud_message_2"] = new()
-            {
-                ["sr"] = "Pridruzite se nasem Discord serveru, kucaj !discord",
-                ["en"] = "Join our Discord server, say !discord"
-            },
-        };
+                ["hud_message_1"] = new()
+                {
+                    ["sr"] = "Dodajte IP u favorites ➤➤ 127.0.0.1:27015",
+                    ["en"] = "Add IP to favorites ➤➤ 127.0.0.1:27015",
+                },
+                ["hud_message_2"] = new()
+                {
+                    ["sr"] = "Pridruzite se nasem Discord serveru, kucaj !discord",
+                    ["en"] = "Join our Discord server, say !discord",
+                },
+            };
     }
 }

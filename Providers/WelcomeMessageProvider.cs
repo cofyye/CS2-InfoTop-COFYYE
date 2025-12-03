@@ -8,7 +8,9 @@
 
         public WelcomeMessageProvider()
         {
-            _messagesQueue = new Queue<KeyValuePair<string, Dictionary<string, string>>>(Instance?.Config?.WelcomeMessages ?? []);
+            _messagesQueue = new Queue<KeyValuePair<string, Dictionary<string, string>>>(
+                Instance?.Config?.WelcomeMessages ?? []
+            );
         }
 
         public string GetWelcomeMessage(string language)

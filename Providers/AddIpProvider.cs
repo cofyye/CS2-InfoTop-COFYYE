@@ -8,7 +8,9 @@
 
         public AddIpProvider()
         {
-            _messagesQueue = new Queue<KeyValuePair<string, Dictionary<string, string>>>(Instance?.Config?.AddIpMessages ?? []);
+            _messagesQueue = new Queue<KeyValuePair<string, Dictionary<string, string>>>(
+                Instance?.Config?.AddIpMessages ?? []
+            );
         }
 
         public string GetAddIpMessage(string language)
