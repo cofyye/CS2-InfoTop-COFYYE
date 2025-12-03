@@ -16,7 +16,7 @@ namespace InfoTop_COFYYE
     public class InfoTopCOFYYE : BasePlugin, IPluginConfig<Config.Config>
     {
         public override string ModuleName => "InfoTop";
-        public override string ModuleVersion => "1.2";
+        public override string ModuleVersion => "1.3";
         public override string ModuleAuthor => "cofyye";
         public override string ModuleDescription => "https://github.com/cofyye";
 
@@ -158,66 +158,60 @@ namespace InfoTop_COFYYE
                 return HookResult.Continue;
             }
 
-            var hostname = ConVar.Find("hostname")?.StringValue;
-            var maxRounds = ConVar.Find("mp_maxrounds")?.GetPrimitiveValue<int>();
-            var ctScore = 0;
-            var ttScore = 0;
-
-            var teamManagers = Utilities.FindAllEntitiesByDesignerName<CCSTeam>("cs_team_manager");
-
-            foreach (var teamManager in teamManagers)
-            {
-                if ((CsTeam)teamManager.TeamNum == CsTeam.Terrorist)
-                {
-                    ttScore += teamManager.Score;
-                }
-                if ((CsTeam)teamManager.TeamNum == CsTeam.CounterTerrorist)
-                {
-                    ctScore += teamManager.Score;
-                }
-            }
-
+            var prefix = Config?.Prefix ?? "{lightpurple}[InfoTop] {orange}»» ";
             var players = Utilities.GetPlayers().Where(p => PlayerUtils.IsValidPlayer(p)).ToList();
 
             foreach (var player in players)
             {
                 if (Config?.EnableWelcomeMsg == true)
                 {
-                    var localizerWelcome =
-                        GlobalVariables
-                            .WelcomeMessageProvider?.GetWelcomeMessage(
-                                player.GetLanguage().TwoLetterISOLanguageName ?? "en"
-                            )
-                            .Replace("{HOSTNAME}", hostname) ?? "Message not available";
+                    var message =
+                        GlobalVariables.WelcomeMessageProvider?.GetWelcomeMessage(
+                            player.GetLanguage().TwoLetterISOLanguageName ?? "en"
+                        ) ?? "Message not available";
 
-                    player.PrintToChat(StringExtensions.ReplaceColorTags(localizerWelcome));
+                    var processedMessage = MessageUtils.ReplaceMessageParameters(message, player);
+                    var lines = processedMessage.Split(["{NEXTLINE}"], StringSplitOptions.None);
+
+                    foreach (var line in lines)
+                    {
+                        var fullText = prefix + line;
+                        player.PrintToChat(StringExtensions.ReplaceColorTags(fullText));
+                    }
                 }
 
                 if (Config?.EnableAddIpMsg == true)
                 {
-                    var localizerAddIP =
+                    var message =
                         GlobalVariables.AddIpProvider?.GetAddIpMessage(
                             player.GetLanguage().TwoLetterISOLanguageName ?? "en"
                         ) ?? "Message not available";
 
-                    player.PrintToChat(StringExtensions.ReplaceColorTags(localizerAddIP));
+                    var processedMessage = MessageUtils.ReplaceMessageParameters(message, player);
+                    var lines = processedMessage.Split(["{NEXTLINE}"], StringSplitOptions.None);
+
+                    foreach (var line in lines)
+                    {
+                        var fullText = prefix + line;
+                        player.PrintToChat(StringExtensions.ReplaceColorTags(fullText));
+                    }
                 }
 
                 if (Config?.EnableInfoTopText == true)
                 {
-                    var localizerText =
-                        GlobalVariables
-                            .InfoTopTextProvider?.GetInfoTopTextMessage(
-                                player.GetLanguage().TwoLetterISOLanguageName ?? "en"
-                            )
-                            .Replace("{CURRENT_ROUNDS}", (ttScore + ctScore).ToString())
-                            .Replace("{MAX_ROUNDS}", maxRounds.ToString())
-                            .Replace("{CURRENT_MAP}", Server.MapName)
-                            .Replace("{CURRENT_PLAYERS}", Utilities.GetPlayers().Count.ToString())
-                            .Replace("{MAX_PLAYERS}", Server.MaxPlayers.ToString())
-                        ?? "Message not available";
+                    var message =
+                        GlobalVariables.InfoTopTextProvider?.GetInfoTopTextMessage(
+                            player.GetLanguage().TwoLetterISOLanguageName ?? "en"
+                        ) ?? "Message not available";
 
-                    player.PrintToChat(StringExtensions.ReplaceColorTags(localizerText));
+                    var processedMessage = MessageUtils.ReplaceMessageParameters(message, player);
+                    var lines = processedMessage.Split(["{NEXTLINE}"], StringSplitOptions.None);
+
+                    foreach (var line in lines)
+                    {
+                        var fullText = prefix + line;
+                        player.PrintToChat(StringExtensions.ReplaceColorTags(fullText));
+                    }
                 }
             }
 
