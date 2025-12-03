@@ -21,7 +21,7 @@ namespace InfoTop_COFYYE.Config
         public bool EnableHudAds { get; init; } = true;
 
         [JsonPropertyName("duration_per_hud_ad")]
-        public int DurationPerHudAd { get; init; } = 120;
+        public int DurationPerHudAd { get; init; } = 1200;
 
         [JsonPropertyName("cooldown_per_hud_ad")]
         public int CoolDownPerHudAd { get; init; } = 60;
