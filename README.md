@@ -78,7 +78,7 @@ To run this plugin, ensure the following dependencies are installed:
 ### 🔧 Installation Steps
 
 1. **Download** the latest release:  
-   📥 [InfoTop v1.2](https://github.com/cofyye/CS2-InfoTop-COFYYE/releases/download/1.2/InfoTop-COFYYE-v1.2.zip)
+   📥 [InfoTop v1.3](https://github.com/cofyye/CS2-InfoTop-COFYYE/releases/download/1.3/InfoTop-COFYYE-v1.3.zip)
 2. **Extract & Upload** the contents into:
    > `game/csgo/addons/counterstrikesharp/plugins`
 3. **Restart the server** or **change the map** to activate the plugin.
