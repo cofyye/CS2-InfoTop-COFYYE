@@ -112,8 +112,13 @@ All configurations, including language settings, can be adjusted in the followin
    - **Description**: Enables or disables the "Add IP to favorites" message.
 
 4. **`enable_infotop_text`**
+
    - **Values**: `true`, `false`
    - **Description**: Enables or disables the round info display.
+
+5. **`show_info_every_x_round`**
+   - **Values**: Integer (`1`, `2`, `3`, etc.)
+   - **Description**: Defines how often the info message should be displayed (every X rounds).
 
 ### 🔹 HUD Messages & Ads
 
@@ -229,12 +234,6 @@ All configurations, including language settings, can be adjusted in the followin
   }
   ```
 - **Description**: Configures HUD messages in multiple languages. Does **NOT** support `{NEXTLINE}`.
-  }
-  }
-  ```
-
-  ```
-- **Description**: Configures HUD messages in multiple languages.
 
 ---
 
