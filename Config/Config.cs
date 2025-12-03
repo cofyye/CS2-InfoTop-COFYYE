@@ -5,6 +5,9 @@ namespace InfoTop_COFYYE.Config
 {
     public class Config : BasePluginConfig
     {
+        [JsonPropertyName("prefix")]
+        public string Prefix { get; init; } = "{lightpurple}[InfoTop] {orange}»» ";
+
         [JsonPropertyName("enable_welcome_msg")]
         public bool EnableWelcomeMsg { get; init; } = true;
 
@@ -21,7 +24,7 @@ namespace InfoTop_COFYYE.Config
         public bool EnableHudAds { get; init; } = true;
 
         [JsonPropertyName("duration_per_hud_ad")]
-        public int DurationPerHudAd { get; init; } = 1200;
+        public int DurationPerHudAd { get; init; } = 120;
 
         [JsonPropertyName("cooldown_per_hud_ad")]
         public int CoolDownPerHudAd { get; init; } = 60;
@@ -57,9 +60,9 @@ namespace InfoTop_COFYYE.Config
                 ["welcome_message_1"] = new()
                 {
                     ["sr"] =
-                        "{lightpurple}[Info] {orange}★彡 {yellow}Dobrodosli na{orange}【 {lime}{HOSTNAME}{orange} 】彡★",
+                        "{orange}★彡 {yellow}Dobrodosli na{orange}【 {lime}{HOSTNAME}{orange} 】彡★",
                     ["en"] =
-                        "{lightpurple}[Info] {orange}★彡 {yellow}Welcome to{orange}【 {lime}{HOSTNAME}{orange} 】彡★",
+                        "{orange}★彡 {yellow}Welcome to{orange}【 {lime}{HOSTNAME}{orange} 】彡★",
                 },
             };
 
@@ -69,10 +72,8 @@ namespace InfoTop_COFYYE.Config
             {
                 ["addip_message_1"] = new()
                 {
-                    ["sr"] =
-                        "{lightpurple}[Info] {yellow}Dodajte IP u favorites {orange}➤➤ {lime}127.0.0.1:27015",
-                    ["en"] =
-                        "{lightpurple}[Info] {yellow}Add IP to favorites {orange}➤➤ {lime}127.0.0.1:27015",
+                    ["sr"] = "{yellow}Dodajte IP u favorites {orange}➤➤ {lime}{IP}",
+                    ["en"] = "{yellow}Add IP to favorites {orange}➤➤ {lime}{IP}",
                 },
             };
 
@@ -83,9 +84,9 @@ namespace InfoTop_COFYYE.Config
                 ["infotop_text_message_1"] = new()
                 {
                     ["sr"] =
-                        "{lightpurple}[Info] {yellow}Runda: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {orange}• {yellow}Mapa: {lime}{CURRENT_MAP} {orange}• {yellow}Igraci: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}",
+                        "{yellow}Runda: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {NEXTLINE} {yellow}Mapa: {lime}{CURRENT_MAP} {NEXTLINE} {yellow}Igraci: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}",
                     ["en"] =
-                        "{lightpurple}[Info] {yellow}Round: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {orange}• {yellow}Map: {lime}{CURRENT_MAP} {orange}• {yellow}Players: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}",
+                        "{yellow}Round: {lime}{CURRENT_ROUNDS}{yellow}/{lime}{MAX_ROUNDS} {NEXTLINE} {yellow}Map: {lime}{CURRENT_MAP} {NEXTLINE} {yellow}Players: {lime}{CURRENT_PLAYERS}{yellow}/{lime}{MAX_PLAYERS}",
                 },
             };
 
@@ -95,13 +96,18 @@ namespace InfoTop_COFYYE.Config
             {
                 ["hud_message_1"] = new()
                 {
-                    ["sr"] = "Dodajte IP u favorites ➤➤ 127.0.0.1:27015",
-                    ["en"] = "Add IP to favorites ➤➤ 127.0.0.1:27015",
+                    ["sr"] = "Dodajte IP u favorites ➤➤ {IP}",
+                    ["en"] = "Add IP to favorites ➤➤ {IP}",
                 },
                 ["hud_message_2"] = new()
                 {
                     ["sr"] = "Pridruzite se nasem Discord serveru, kucaj !discord",
                     ["en"] = "Join our Discord server, say !discord",
+                },
+                ["hud_message_3"] = new()
+                {
+                    ["sr"] = "Zdravo {PLAYER_NAME}, uzivaj u igri!",
+                    ["en"] = "Hello {PLAYER_NAME}, enjoy the game!",
                 },
             };
     }

@@ -12,5 +12,19 @@ namespace InfoTop_COFYYE.Utils
                 && !p.IsHLTV
                 && p.Connected == PlayerConnectedState.PlayerConnected;
         }
+
+        public static string GetPlayerNickname(CCSPlayerController player)
+        {
+            if (
+                !IsValidPlayer(player)
+                || player.PlayerName == null
+                || player.PlayerName.Length == 0
+            )
+            {
+                return "Unknown";
+            }
+
+            return player.PlayerName;
+        }
     }
 }

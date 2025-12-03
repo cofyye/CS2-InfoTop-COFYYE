@@ -35,6 +35,10 @@ namespace InfoTop_COFYYE.Utils
                             ? defaultMsg
                             : "Unknown Language"
                     );
+
+                // Replace parameters in HUD message (without {NEXTLINE} support)
+                hudMessage = MessageUtils.ReplaceMessageParameters(hudMessage, player);
+
                 var fontRGB = Instance?.Config?.HudRGBColor?.Split(",");
 
                 GlobalVariables.GameHudApi?.Native_GameHUD_SetParams(
